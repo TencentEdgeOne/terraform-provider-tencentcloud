@@ -1633,6 +1633,7 @@ tencentcloud_teo_security_ip_group_content
 tencentcloud_teo_web_security_templates
 tencentcloud_teo_content_quota
 tencentcloud_teo_billing_data
+tencentcloud_teo_makers_zones
 
 Resource
 tencentcloud_teo_zone
@@ -1691,7 +1692,10 @@ tencentcloud_teo_domain_shared_cname_attachment
 tencentcloud_teo_edge_kv
 tencentcloud_teo_edge_kv_namespace
 tencentcloud_teo_dns_records_status
-
+tencentcloud_teo_makers_project
+tencentcloud_teo_makers_project_env_vars
+tencentcloud_teo_makers_deployment
+tencentcloud_teo_makers_custom_domain
 Action
 tencentcloud_teo_confirm_origin_acl_update
 

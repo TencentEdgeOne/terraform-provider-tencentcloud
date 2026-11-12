@@ -50,11 +50,16 @@ var resourcesMap = map[string]func() resource.Resource{
 	"tencentcloud_cam_update_password_rule_config":  cam.NewCamUpdatePasswordRuleConfigResource,
 	"tencentcloud_config_aggregate_compliance_pack": config.NewConfigAggregateCompliancePackResource,
 	"tencentcloud_ssm_secret_version_v2":            ssm.NewSsmSecretVersionV2Resource,
+	"tencentcloud_teo_makers_custom_domain":         teo.NewTeoMakersCustomDomainResource,
+	"tencentcloud_teo_makers_deployment":            teo.NewTeoMakersDeploymentResource,
+	"tencentcloud_teo_makers_project":               teo.NewTeoMakersProjectResource,
+	"tencentcloud_teo_makers_project_env_vars":      teo.NewTeoMakersProjectEnvVarsResource,
 }
 
 // dataSourcesMap maps every framework data source type name to its factory.
 var dataSourcesMap = map[string]func() datasource.DataSource{
 	"tencentcloud_config_list_aggregate_compliance_packs": config.NewConfigListAggregateCompliancePacksDataSource,
+	"tencentcloud_teo_makers_zones":                       teo.NewTeoMakersZonesDataSource,
 }
 
 // functionsMap maps every framework function name to its factory. Function
