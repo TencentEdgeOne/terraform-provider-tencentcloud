@@ -283,6 +283,7 @@ type TencentCloudClient struct {
 	vcubev20220410Conn          *vcubev20220410.Client
 	advisorv20200721Conn        *advisorv20200721.Client
 	tdmysqlv20211122Conn        *tdmysqlv20211122.Client
+	makersConn                  *common.Client
 }
 
 // NewClientProfile returns a new ClientProfile
@@ -2442,4 +2443,17 @@ func (me *TencentCloudClient) UseTdmysqlV20211122Client() *tdmysqlv20211122.Clie
 	me.tdmysqlv20211122Conn.WithHttpTransport(&LogRoundTripper{})
 
 	return me.tdmysqlv20211122Conn
+}
+
+// UseMakersClient return Makers client for service. tencentcloud-sdk-go has no
+// makers package yet, so it is a common client.
+func (me *TencentCloudClient) UseMakersClient() *common.Client {
+	if me.makersConn != nil {
+		return me.makersConn
+	}
+	cpf := me.NewClientProfile(300)
+	me.makersConn = common.NewCommonClient(me.Credential, me.Region, cpf)
+	me.makersConn.WithHttpTransport(&LogRoundTripper{})
+
+	return me.makersConn
 }

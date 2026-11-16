@@ -2852,3 +2852,10 @@ tencentcloud_fwm_vpc_acl_rule
 
 Action
 tencentcloud_fwm_dispatch_strategy
+
+EdgeOne Makers(MAKERS)
+Resource
+tencentcloud_makers_project
+tencentcloud_makers_project_env_vars
+tencentcloud_makers_deployment
+tencentcloud_makers_custom_domain
