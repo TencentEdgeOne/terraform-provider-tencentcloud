@@ -82,9 +82,33 @@ func makersParams(zoneId string, payload interface{}) (map[string]interface{}, e
 		if err := decoder.Decode(&params); err != nil {
 			return nil, err
 		}
+		params = makersNumbers(params).(map[string]interface{})
 	}
 	params["ZoneId"] = zoneId
 	return params, nil
+}
+
+// makersNumbers replaces json.Number with int64 (or float64), because the SDK
+// common request marshals json.Number as a string and the gateway rejects it.
+func makersNumbers(v interface{}) interface{} {
+	switch t := v.(type) {
+	case map[string]interface{}:
+		for k, e := range t {
+			t[k] = makersNumbers(e)
+		}
+	case []interface{}:
+		for i, e := range t {
+			t[i] = makersNumbers(e)
+		}
+	case json.Number:
+		if n, err := t.Int64(); err == nil {
+			return n
+		}
+		if f, err := t.Float64(); err == nil {
+			return f
+		}
+	}
+	return v
 }
 
 // call sends one makers action and decodes `Response` into out. out may be

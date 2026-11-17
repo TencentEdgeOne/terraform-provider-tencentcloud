@@ -3,6 +3,7 @@ package makers
 import (
 	"archive/zip"
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -11,6 +12,7 @@ import (
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	tchttp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 )
 
 func makersInt64(v int64) *int64    { return &v }
@@ -36,6 +38,18 @@ func TestMakersParams(t *testing.T) {
 	id := params["EnvVars"].([]interface{})[0].(map[string]interface{})["Id"]
 	if fmt.Sprint(id) != "9007199254740993" {
 		t.Errorf("large ids must keep their precision, got %v", id)
+	}
+
+	params, err = makersParams("zone-1", map[string]interface{}{"Limit": 10})
+	if err != nil {
+		t.Fatal(err)
+	}
+	request := tchttp.NewCommonRequest(makersService, makersVersion, "DescribeProjects")
+	if err := request.SetActionParameters(params); err != nil {
+		t.Fatal(err)
+	}
+	if body, _ := json.Marshal(request); string(body) != `{"Limit":10,"ZoneId":"zone-1"}` {
+		t.Errorf("integers must be sent as JSON numbers, got %s", body)
 	}
 
 	params, err = makersParams("zone-1", nil)
